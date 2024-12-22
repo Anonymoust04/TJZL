@@ -6,11 +6,25 @@ class TrackDonationsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Track Donations'),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.green.shade700,
         centerTitle: true,
       ),
-      body: Center(
-        child: Text('Track your donations and see progress here!'),
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: [
+          DonationStatusCard(
+            projectName: 'Tesla EV Charger',
+            amountDonated: 5000,
+            totalRequired: 70000,
+            isDividendEligible: true,
+          ),
+          DonationStatusCard(
+            projectName: 'BYD EV Charger',
+            amountDonated: 1000,
+            totalRequired: 8000,
+            isDividendEligible: false,
+          ),
+        ],
       ),
     );
   }
