@@ -5,6 +5,7 @@ import 'track_donations_page.dart';
 import 'wallet_page.dart';
 import 'profile_page.dart';
 import 'home_page.dart';
+import 'sign_up_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/track': (context) => TrackDonationsPage(projectName: 'Default Project'), // Provide a default project name
         '/wallet': (context) => WalletPage(),
         '/profile': (context) => ProfilePage(),
+        '/signup': (context) => SignUpPage(),
       },
     );
   }

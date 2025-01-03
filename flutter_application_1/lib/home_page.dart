@@ -8,27 +8,41 @@ class HomePage extends StatelessWidget {
         title: Text('Home'),
         backgroundColor: Colors.green.shade700,
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/donate');
-              },
-              child: Text('Donate'),
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/donate');
+                  },
+                  child: Text('Donate'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/wallet');
+                  },
+                  child: Text('Wallet'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: Text('Profile'),
+                ),
+              ],
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/wallet');
+                Navigator.pushReplacementNamed(context, '/login');
               },
-              child: Text('Wallet'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-              child: Text('Profile'),
+              child: Text('Logout'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red, // Red color for the logout button
+              ),
             ),
           ],
         ),
