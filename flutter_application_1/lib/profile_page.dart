@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class WalletPage extends StatelessWidget {
+class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wallet'),
+        title: Text('Profile'),
         backgroundColor: Colors.green.shade700,
       ),
       body: Center(
-        child: Text('Wallet Page'),
+        child: Text('Profile Page'),
       ),
     );
   }

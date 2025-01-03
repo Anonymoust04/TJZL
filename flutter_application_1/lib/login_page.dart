@@ -1,44 +1,82 @@
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Login',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Password'),
-            ),
-            SizedBox(height: 16),
-            AnimatedButton(
-              text: "Log In",
-              onTap: () {
-                Navigator.pushNamed(context, '/donate');
-              },
-            ),
-            TextButton(
-              onPressed: () {
-                // Navigate to Signup Page
-              },
-              child: Text("Sign up!"),
-            ),
-          ],
+      appBar: AppBar(
+        title: Text('Login'),
+        backgroundColor: Colors.green.shade700,
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Green design at the top
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.green.shade700,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(100),
+                    bottomRight: Radius.circular(100),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Welcome Back!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              TextField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Perform login logic here
+                  // If login is successful, navigate to the HomePage
+                  Navigator.pushReplacementNamed(context, '/home');
+                },
+                child: Text('Login'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green.shade700,
+                ),
+              ),
+              SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  // Navigate to the sign-up page
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: Text('Don\'t have an account? Sign up'),
+              ),
+            ],
+          ),
         ),
       ),
     );

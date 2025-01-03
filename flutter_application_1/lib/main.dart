@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'donate_page.dart';
 import 'track_donations_page.dart';
-//import 'wallet_page.dart';
-//import 'profile_page.dart';
-//import 'notification_page.dart';
+import 'wallet_page.dart';
+import 'profile_page.dart';
+import 'home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login', // The first screen to show
       routes: {
         '/login': (context) => LoginPage(),
+        '/home': (context) => HomePage(),
         '/donate': (context) => DonatePage(),
         '/track': (context) => TrackDonationsPage(projectName: 'Default Project'), // Provide a default project name
-        // '/wallet': (context) => WalletPage(),
-        // '/profile': (context) => ProfilePage(),
-        // '/notifications': (context) => NotificationPage(),
+        '/wallet': (context) => WalletPage(),
+        '/profile': (context) => ProfilePage(),
       },
     );
   }

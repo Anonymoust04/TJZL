@@ -8,8 +8,8 @@ class DonatePage extends StatefulWidget {
 
 class _DonatePageState extends State<DonatePage> {
   Map<String, int> donations = {
-    'Tesla EV Charger': 0,
-    'BYD EV Charger': 0,
+    'Tesla EV Charger Chicago at (740) 686-2688 62847 Glencoe Rd Belmont, Ohio(OH), 43718': 0,
+    'BYD EV Charger at 158, A4 Marsabit County, North Horr Kenya, KE (KEN)': 0,
   };
 
   @override
@@ -22,24 +22,33 @@ class _DonatePageState extends State<DonatePage> {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: donations.keys.map((projectName) {
-          return ListTile(
-            title: Text(projectName),
-            subtitle: Text('Donated: \$${donations[projectName]}'),
-            trailing: ElevatedButton(
-              onPressed: () async {
-                final donatedAmount = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TrackDonationsPage(projectName: projectName),
-                  ),
-                );
-                if (donatedAmount != null) {
-                  setState(() {
-                    donations[projectName] = donations[projectName]! + (donatedAmount as int);
-                  });
-                }
-              },
-              child: Text('Donate'),
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(color: Colors.green.shade700, width: 2),
+            ),
+            child: ListTile(
+              title: Text(projectName),
+              subtitle: Text('Donated: \$${donations[projectName]}'),
+              trailing: ElevatedButton(
+                onPressed: () async {
+                  final donatedAmount = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrackDonationsPage(projectName: projectName),
+                    ),
+                  );
+                  if (donatedAmount != null) {
+                    setState(() {
+                      donations[projectName] = donations[projectName]! + (donatedAmount as int);
+                    });
+                  }
+                },
+                child: Text('Donate'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green.shade700,
+                ),
+              ),
             ),
           );
         }).toList(),
