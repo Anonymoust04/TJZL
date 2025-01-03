@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/donate': (context) => DonatePage(),
-        '/track': (context) => TrackDonationsPage(),
-        '/wallet': (context) => WalletPage(),
-        '/profile': (context) => ProfilePage(),
-        '/notifications': (context) => NotificationPage(),
+        '/track': (context) => TrackDonationsPage(projectName: 'Default Project'), // Provide a default project name
+        // '/wallet': (context) => WalletPage(),
+        // '/profile': (context) => ProfilePage(),
+        // '/notifications': (context) => NotificationPage(),
       },
     );
   }

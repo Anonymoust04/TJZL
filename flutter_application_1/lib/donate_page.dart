@@ -1,60 +1,48 @@
 import 'package:flutter/material.dart';
+import 'track_donations_page.dart';
 
-class DonatePage extends StatelessWidget {
+class DonatePage extends StatefulWidget {
+  @override
+  _DonatePageState createState() => _DonatePageState();
+}
+
+class _DonatePageState extends State<DonatePage> {
+  Map<String, int> donations = {
+    'Tesla EV Charger': 0,
+    'BYD EV Charger': 0,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Donate Now'),
+        title: Text('Donate'),
         backgroundColor: Colors.green.shade700,
-        centerTitle: true,
-        elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Select a Project to Support",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.green.shade800,
-              ),
-            ),
-            SizedBox(height: 10),
-            Expanded(
-              child: ListView(
-                children: [
-                  ProjectCard(
-                    title: 'Tesla EV Charger',
-                    subtitle: 'Funds Needed: \$70,000',
-                    icon: Icons.electric_car,
-                    onTap: () {
-                      Navigator.pushNamed(context, '/track');
-                    },
-                    targetAmount: 70000.0,
-                    currentAmount: 0.0,
-                    percentageComplete: 0.0,
+      body: ListView(
+        padding: EdgeInsets.all(16),
+        children: donations.keys.map((projectName) {
+          return ListTile(
+            title: Text(projectName),
+            subtitle: Text('Donated: \$${donations[projectName]}'),
+            trailing: ElevatedButton(
+              onPressed: () async {
+                final donatedAmount = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TrackDonationsPage(projectName: projectName),
                   ),
-                  ProjectCard(
-                    title: 'BYD EV Charger',
-                    subtitle: 'Funds Needed: \$8,000',
-                    icon: Icons.bolt,
-                    onTap: () {
-                      Navigator.pushNamed(context, '/track');
-                    },
-                    targetAmount: 8000.0,
-                    currentAmount: 0.0,
-                    percentageComplete: 0.0,
-                  ),
-                  // Add more ProjectCards for other projects
-                ],
-              ),
+                );
+                if (donatedAmount != null) {
+                  setState(() {
+                    donations[projectName] = donations[projectName]! + (donatedAmount as int);
+                  });
+                }
+              },
+              child: Text('Donate'),
             ),
-          ],
-        ),
+          );
+        }).toList(),
       ),
     );
   }
