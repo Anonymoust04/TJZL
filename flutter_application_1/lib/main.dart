@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'donate_page.dart';
-import 'track_donations_page.dart';
+import 'enter_donation_page.dart';
 import 'wallet_page.dart';
 import 'profile_page.dart';
 import 'home_page.dart';
@@ -19,15 +19,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'EV Charger Donation DApp',
       theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        brightness: Brightness.dark,
+        primaryColor: Colors.green.shade700,
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
+          bodySmall: TextStyle(color: Colors.white),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green.shade700,
+          ),
+        ),
       ),
-      initialRoute: '/login', // The first screen to show
+      initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
+        '/home': (context) => HomePage(firstName: 'John', lastName: 'Doe'), // Provide default values for demonstration
         '/donate': (context) => DonatePage(),
-        '/track': (context) => TrackDonationsPage(projectName: 'Default Project'), // Provide a default project name
+        '/enter_donation': (context) => EnterDonationsPage(projectName: 'Default Project'),
         '/wallet': (context) => WalletPage(),
         '/profile': (context) => ProfilePage(),
         '/signup': (context) => SignUpPage(),

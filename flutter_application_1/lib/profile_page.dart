@@ -69,9 +69,9 @@ class ProfilePage extends StatelessWidget {
         side: BorderSide(color: Colors.green.shade700, width: 2),
       ),
       child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: subtitle != null ? Text(subtitle) : null,
+        leading: Icon(icon, color: Colors.white),
+        title: Text(title, style: TextStyle(color: Colors.white)),
+        subtitle: subtitle != null ? Text(subtitle, style: TextStyle(color: Colors.white)) : null,
         onTap: onTap,
       ),
     );

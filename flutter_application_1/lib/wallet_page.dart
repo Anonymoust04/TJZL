@@ -9,7 +9,7 @@ class WalletPage extends StatelessWidget {
         backgroundColor: Colors.green.shade700,
       ),
       body: Center(
-        child: Text('Wallet Page'),
+        child: Text('Wallet Page', style: TextStyle(color: Colors.white)),
       ),
     );
   }

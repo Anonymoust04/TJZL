@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'home_page.dart'; // Ensure HomePage is imported
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<bool> _validateUser(String username, String password) async {
+  Future<Map<String, String>?> _validateUser(String username, String password) async {
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/users.txt');
     if (await file.exists()) {
@@ -14,11 +15,11 @@ class LoginPage extends StatelessWidget {
       for (var line in lines) {
         final parts = line.split(',');
         if (parts.length == 5 && parts[2] == username && parts[4] == password) {
-          return true;
+          return {'firstName': parts[0], 'lastName': parts[1]};
         }
       }
     }
-    return false;
+    return null;
   }
 
   @override
@@ -34,7 +35,6 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Green design at the top
               Container(
                 height: 150,
                 decoration: BoxDecoration(
@@ -75,9 +75,17 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  final isValid = await _validateUser(_usernameController.text, _passwordController.text);
-                  if (isValid) {
-                    Navigator.pushReplacementNamed(context, '/home');
+                  final userData = await _validateUser(_usernameController.text, _passwordController.text);
+                  if (userData != null) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
+                          firstName: userData['firstName']!,
+                          lastName: userData['lastName']!,
+                        ),
+                      ),
+                    );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Invalid username or password')),
@@ -85,9 +93,6 @@ class LoginPage extends StatelessWidget {
                   }
                 },
                 child: Text('Login'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.shade700,
-                ),
               ),
               SizedBox(height: 20),
               TextButton(
