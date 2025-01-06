@@ -6,6 +6,9 @@ import 'wallet_page.dart';
 import 'profile_page.dart';
 import 'home_page.dart';
 import 'sign_up_page.dart';
+import 'screens/task_list_page.dart';
+import 'screens/create_task_page.dart';
+import 'propose_location_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'EV Charger Donation DApp',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Colors.green.shade700,
+        primaryColor: Colors.green.shade900,
         scaffoldBackgroundColor: Colors.black,
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green.shade700,
+            backgroundColor: Colors.green.shade900,
           ),
         ),
       ),
@@ -42,6 +45,9 @@ class MyApp extends StatelessWidget {
         '/wallet': (context) => WalletPage(),
         '/profile': (context) => ProfilePage(),
         '/signup': (context) => SignUpPage(),
+        '/tasks': (context) => TaskListPage(),
+        '/create_task': (context) => CreateTaskPage(),
+        '/propose_location': (context) => ProposeLocationPage(),
       },
     );
   }

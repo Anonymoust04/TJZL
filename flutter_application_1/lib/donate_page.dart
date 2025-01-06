@@ -69,8 +69,14 @@ class _DonatePageState extends State<DonatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Donate'),
-        backgroundColor: Colors.green.shade700,
+        title: Row(
+          children: [
+            Image.asset('web/icons/assets/images/dvolt_enhanced_white.png', height: 40),
+            SizedBox(width: 10),
+            Text('Donate'),
+          ],
+        ),
+        backgroundColor: Colors.green.shade900,
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -82,7 +88,7 @@ class _DonatePageState extends State<DonatePage> {
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(color: Colors.green.shade700, width: 2),
+                      side: BorderSide(color: Colors.green.shade900, width: 2),
                     ),
                     child: ListTile(
                       title: Text(projectName, style: TextStyle(color: Colors.white)),
@@ -103,6 +109,9 @@ class _DonatePageState extends State<DonatePage> {
                           }
                         },
                         child: Text('Donate'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade900,
+                        ),
                       ),
                     ),
                   );
@@ -121,7 +130,7 @@ class _DonatePageState extends State<DonatePage> {
               },
               child: Text('Propose a Location'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green.shade700,
+                backgroundColor: Colors.green.shade900,
               ),
             ),
           ],

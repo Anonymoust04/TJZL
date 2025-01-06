@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(); // Define the _formKey
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -20,34 +20,33 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> _storeUserData() async {
     if (_formKey.currentState!.validate()) {
-      final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/users.txt';
-      final file = File(filePath);
-      final userData = '${_firstNameController.text},${_lastNameController.text},${_usernameController.text},${_emailController.text},${_passwordController.text}\n';
-      await file.writeAsString(userData, mode: FileMode.append);
-      // Send verification email
-      await _sendVerificationEmail(_emailController.text);
-      Navigator.pop(context, {'firstName': _firstNameController.text, 'lastName': _lastNameController.text});
-    }
-  }
+      final response = await http.post(
+        Uri.parse('https://api.koii.network/signup'), // Replace with actual Koii signup endpoint
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'firstName': _firstNameController.text,
+          'lastName': _lastNameController.text,
+          'username': _usernameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }),
+      );
 
-  Future<void> _sendVerificationEmail(String email) async {
-    String username = 'your_email@example.com'; // Replace with your email
-    String password = 'your_email_password'; // Replace with your email password
-
-    final smtpServer = gmail(username, password);
-
-    final message = Message()
-      ..from = Address(username, 'Your App Name')
-      ..recipients.add(email)
-      ..subject = 'Email Verification'
-      ..text = 'Thank you for signing up. Please verify your email address.';
-
-    try {
-      final sendReport = await send(message, smtpServer);
-      print('Message sent: ' + sendReport.toString());
-    } on MailerException catch (e) {
-      print('Message not sent. \n' + e.toString());
+      if (response.statusCode == 201) {
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/users.txt';
+        final file = File(filePath);
+        final userData = '${_firstNameController.text},${_lastNameController.text},${_usernameController.text},${_emailController.text},${_passwordController.text}\n';
+        await file.writeAsString(userData, mode: FileMode.append);
+        Navigator.pop(context, {'firstName': _firstNameController.text, 'lastName': _lastNameController.text});
+      } else {
+        // Handle signup error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Signup failed: ${response.body}')),
+        );
+      }
     }
   }
 
@@ -55,13 +54,19 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
-        backgroundColor: Colors.green.shade700,
+        title: Row(
+          children: [
+            Image.asset('web/icons/assets/images/dvolt_enhanced_white.png', height: 40),
+            SizedBox(width: 10),
+            Text('Sign Up'),
+          ],
+        ),
+        backgroundColor: Colors.green.shade900,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+          key: _formKey, // Use the _formKey
           child: ListView(
             children: [
               TextFormField(
@@ -172,7 +177,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 onPressed: _storeUserData,
                 child: Text('Sign Up'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.shade700,
+                  backgroundColor: Colors.green.shade900,
                 ),
               ),
             ],
